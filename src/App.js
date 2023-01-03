@@ -53,7 +53,7 @@ function App() {
       </div>
       <div className='allTasks'>
         {data.map((item, index) => (
-          <div style={{ display : item.userId == 1 ? 'display' : 'none'}} className='task' key={index}>
+          <div style={{ display : item.userId === 1 ? 'display' : 'none'}} className='task' key={index}>
             <p style={{ textDecoration : item.completed ? 'line-through' : 'none'}}>{item.userId === 1 ? item.title : null } 
             <span onClick={deleteRequest}><TiCancelOutline /></span>
             </p>
