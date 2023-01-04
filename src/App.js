@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { TiDelete } from "react-icons/ti";
+import { AiOutlineCheckCircle } from "react-icons/ai";
 
 function App() {
   const [data, setData] = useState([]);
@@ -25,13 +26,28 @@ function App() {
   }
 
   const deleteRequest = (e) => {
-    fetch('https://jsonplaceholder.typicode.com/todos?Id=1', {
+    fetch('https://jsonplaceholder.typicode.com/todos/id=2', {
       method: 'DELETE',
     })
     .then((response) => response.json())
-    .then((json) => console.log(json));
+    .then((json) => console.log(json))
+    .catch((err) => console.log(err));
     console.log('ok');
   }
+
+  const completedTask = (e) => {
+    fetch('https://jsonplaceholder.typicode.com/todos/id=1', {
+    method: 'PATCH',
+    body: JSON.stringify({
+      completed: 'true',
+    }),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  })
+  .then((response) => response.json())
+  .then((json) => console.log(json));
+}
 
   useEffect(() => {
       fetch('https://jsonplaceholder.typicode.com/todos')
@@ -54,6 +70,9 @@ function App() {
       <div className='allTasks'>
         {data.map((item, index) => (
           <div style={{ display : item.userId === 1 ? 'display' : 'none'}} className='task' key={index}>
+            <p>
+              <span onClick={completedTask}><AiOutlineCheckCircle className='checkCircleIcon' /></span>
+            </p>
             <p 
               style={{ textDecoration : item.completed ? 'line-through' : 'none'}}
               className='task-title'
