@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { TiCancelOutline } from "react-icons/ti";
+import { TiDelete } from "react-icons/ti";
 
 function App() {
   const [data, setData] = useState([]);
@@ -54,8 +54,14 @@ function App() {
       <div className='allTasks'>
         {data.map((item, index) => (
           <div style={{ display : item.userId === 1 ? 'display' : 'none'}} className='task' key={index}>
-            <p style={{ textDecoration : item.completed ? 'line-through' : 'none'}}>{item.userId === 1 ? item.title : null } 
-            <span onClick={deleteRequest}><TiCancelOutline /></span>
+            <p 
+              style={{ textDecoration : item.completed ? 'line-through' : 'none'}}
+              className='task-title'
+            >
+              {item.userId === 1 ? item.title : null } 
+            </p>
+            <p>
+              <span onClick={deleteRequest}><TiDelete className='deleteIcon' /></span>
             </p>
           </div>
         ))}

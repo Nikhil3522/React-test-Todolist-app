@@ -8,6 +8,8 @@
   margin-right: auto;
   background-color: rgb(168, 205, 240);
   text-align: center;
+  display: flex;
+  justify-content: space-between;
 }
 
 .submit-button {
@@ -87,4 +89,17 @@
 .form{
   display: flex;
   flex-direction: column;
+}
+
+.task-title{
+  margin-top: 5px;
+}
+
+/* Icon */
+
+.deleteIcon{
+  color: red;
+  font-size: 30px;
+  margin-top: -15px;
+  cursor: pointer;
 }
