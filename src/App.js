@@ -2,15 +2,17 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import { TiDelete } from "react-icons/ti";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { SyncLoader } from 'react-spinners';
 
 function App() {
   const [data, setData] = useState([]);
   const [inputTask, setInputTask] = useState(null);
+  const [ showLoading, setShowLoading ] = useState(false);
 
-  const submitTask = (e) => {
+  const submitTask = async (e) => {
     e.preventDefault();
-    console.log(inputTask)
-    fetch('https://jsonplaceholder.typicode.com/todos', {
+    setShowLoading(true);
+    await fetch('https://jsonplaceholder.typicode.com/todos', {
       method: 'POST',
       body: JSON.stringify({
         title: inputTask,
@@ -23,6 +25,8 @@ function App() {
     })
     .then((response) => response.json())
     .then((json) => setData([json, ...data]));
+    setInputTask('');
+    setShowLoading(false);
   }
 
   const deleteRequest = (e) => {
@@ -35,18 +39,22 @@ function App() {
     console.log('ok');
   }
 
-  const completedTask = (e) => {
-    fetch('https://jsonplaceholder.typicode.com/todos/id=1', {
+  const completedTask = (id, title, e) => {
+    console.log(id);
+    fetch(`https://jsonplaceholder.typicode.com/todos/id=${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
-      completed: 'true',
+      userId: 1,
+      id,
+      title,
+      completed: true
     }),
     headers: {
       'Content-type': 'application/json; charset=UTF-8',
     },
   })
   .then((response) => response.json())
-  .then((json) => console.log(json));
+  .then((json) => setData([...data.slice(0,id-1), json, ...data.slice(id, 21)]));
 }
 
   useEffect(() => {
@@ -60,10 +68,11 @@ function App() {
       <div className='input-div'>
         <form>
           <div>
-            <input type="text" onChange={(e) => setInputTask(e.target.value)} className='input-task' placeholder='Enter The task....' />
+            <input type="text" onChange={(e) => (setInputTask(e.target.value), e.target.value='')} className='input-task' value={inputTask} placeholder='Enter The task....' />
           </div>
           <div>
-            <input type="submit" onClick={submitTask} className='submit-button' />
+            <button onClick={submitTask} className='submit-button'>{showLoading ? <SyncLoader color="white" size="9" loading={showLoading} /> : 'Add Task'}</button>
+            {/* <input type="submit" value={`${<SyncLoader color="red" />`} onClick={submitTask} className='submit-button' /> */}
           </div>
         </form>
       </div>
@@ -71,7 +80,7 @@ function App() {
         {data.map((item, index) => (
           <div style={{ display : item.userId === 1 ? 'display' : 'none'}} className='task' key={index}>
             <p>
-              <span onClick={completedTask}><AiOutlineCheckCircle className='checkCircleIcon' /></span>
+              <span onClick={() => completedTask(item.id, item.title)}><AiOutlineCheckCircle className='checkCircleIcon' /></span>
             </p>
             <p 
               style={{ textDecoration : item.completed ? 'line-through' : 'none'}}
