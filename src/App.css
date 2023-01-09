@@ -1,3 +1,4 @@
+/* task style */
 .task{
   border: 1px solid black;
   border-radius: 6px;
@@ -12,6 +13,7 @@
   justify-content: space-between;
 }
 
+/* submit button style */
 .submit-button {
   appearance: none;
   background-color: #2ea44f;
@@ -97,6 +99,7 @@
 
 /* Icon */
 
+/* delete icon style */
 .deleteIcon{
   color: red;
   font-size: 30px;
@@ -104,6 +107,7 @@
   cursor: pointer;
 }
 
+/* check icon style */
 .checkCircleIcon{
   color: green;
   font-size: 28px;
