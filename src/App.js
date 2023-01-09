@@ -29,18 +29,27 @@ function App() {
     setShowLoading(false);
   }
 
-  const deleteRequest = (e) => {
+  const deleteRequest = (id , e) => {
     fetch('https://jsonplaceholder.typicode.com/todos/id=2', {
       method: 'DELETE',
     })
     .then((response) => response.json())
-    .then((json) => console.log(json))
+    .then((json) => setData([...data.slice(0, id), ...data.slice(id+1, data.length)]))
     .catch((err) => console.log(err));
-    console.log('ok');
+
+    console.log('data', data);
   }
 
+  useEffect( () => {
+    console.log('old', data);
+    data.map((item, index) => {
+      item.id = index
+    });
+    console.log('new', data);
+  }, [data]);
+
   const completedTask = (id, title, e) => {
-    console.log(id);
+    // console.log(id);
     fetch(`https://jsonplaceholder.typicode.com/todos/id=${id}`, {
     method: 'PATCH',
     body: JSON.stringify({
@@ -89,7 +98,7 @@ function App() {
               {item.userId === 1 ? item.title : null } 
             </p>
             <p>
-              <span onClick={deleteRequest}><TiDelete className='deleteIcon' /></span>
+              <span onClick={() => deleteRequest(item.id)}><TiDelete className='deleteIcon' /></span>
             </p>
           </div>
         ))}
