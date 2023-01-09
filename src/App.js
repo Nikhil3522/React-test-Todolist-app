@@ -89,7 +89,7 @@ function App() {
         {data.map((item, index) => (
           <div style={{ display : item.userId === 1 ? 'display' : 'none'}} className='task' key={index}>
             <p>
-              <span onClick={() => completedTask(item.id, item.title)}><AiOutlineCheckCircle className='checkCircleIcon' /></span>
+              <span onClick={() => completedTask(item.id+1, item.title)}><AiOutlineCheckCircle className='checkCircleIcon' /></span>
             </p>
             <p 
               style={{ textDecoration : item.completed ? 'line-through' : 'none'}}
