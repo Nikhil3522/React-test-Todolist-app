@@ -114,3 +114,14 @@
   margin-top: -15px;
   cursor: pointer;
 }
+
+.right-icon{
+  display: flex;
+}
+
+.editIcon{
+  color: rgba(26, 36, 234, 0.63);
+  font-size: 20px;
+  margin-top: -15px;
+  cursor: pointer;
+}
